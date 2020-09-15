@@ -48,6 +48,7 @@ import io.openmessaging.benchmark.worker.commands.TopicsInfo;
 
 public class WorkloadGenerator implements AutoCloseable {
 
+    public static final int STATS_PERIOD = 10_000;
     private final String driverName;
     private final Workload workload;
     private final Worker worker;
@@ -384,9 +385,14 @@ public class WorkloadGenerator implements AutoCloseable {
         result.workload = workload.name;
         result.driver = driverName;
 
+        long due = System.currentTimeMillis() + STATS_PERIOD;
         while (true) {
             try {
-                Thread.sleep(10000);
+                long remaining = due - System.currentTimeMillis();
+                if (remaining > 0) {
+                    Thread.sleep(remaining);
+                }
+                due = System.currentTimeMillis() + STATS_PERIOD;
             } catch (InterruptedException e) {
                 break;
             }
