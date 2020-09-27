@@ -315,9 +315,11 @@ public class DistributedWorkersEnsemble implements Worker {
     }
 
     private CompletableFuture<Void> sendPost(String host, String path, byte[] body) {
+        long startTime = System.currentTimeMillis();
         return httpClient.preparePost(host + path).setBody(body).execute().toCompletableFuture().thenApply(x -> {
+            long took = System.currentTimeMillis() - startTime;
             if (x.getStatusCode() != 200) {
-                log.error("Failed to do HTTP post request to {}{} -- code: {} error: {}", host, path, x.getStatusCode(),
+                log.error("Failed to do HTTP post request to {}{} -- code: {} duration: {}ms error: {} ", host, path, x.getStatusCode(), took,
                         x.getResponseBody());
             }
             Preconditions.checkArgument(x.getStatusCode() == 200);
