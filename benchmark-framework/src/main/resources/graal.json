@@ -1,0 +1,23 @@
+[
+  {
+    "name" : "org.apache.bookkeeper.stats.prometheus.PrometheusMetricsProvider",
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.openmessaging.benchmark.worker.BenchmarkWorker$Arguments",
+    "allPublicConstructors": true,
+    "allPublicFields" : true
+  },
+  {
+    "name": "com.beust.jcommander.validators.NoValueValidator",
+    "allPublicConstructors": true
+  },
+  {
+    "name": "com.beust.jcommander.validators.NoValidator",
+    "allPublicConstructors": true
+  },
+  {
+    "name": "com.beust.jcommander.converters.IntegerConverter",
+    "allPublicConstructors": true
+  }
+]

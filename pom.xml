@@ -58,6 +58,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<bookkeeper.version>4.7.0</bookkeeper.version>
+		<graalvm.version>20.2.0</graalvm.version>
 	</properties>
 
 	<build>
@@ -139,4 +140,88 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<profiles>
+		<profile>
+			<id>useGraalVm</id>
+			<activation>
+				<property>
+					<name>useGraalVm</name>
+				</property>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.graalvm.sdk</groupId>
+						<artifactId>graal-sdk</artifactId>
+						<version>${graalvm.version}</version>
+						<scope>provided</scope>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<dependencies>
+				<dependency>
+					<groupId>org.graalvm.sdk</groupId>
+					<artifactId>graal-sdk</artifactId>
+					<version>${graalvm.version}</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.graalvm.nativeimage</groupId>
+							<artifactId>native-image-maven-plugin</artifactId>
+							<version>${graalvm.version}</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>native-image</goal>
+									</goals>
+									<phase>package</phase>
+								</execution>
+							</executions>
+							<configuration>
+								<skip>true</skip>
+								<buildArgs>
+									--no-fallback
+								</buildArgs>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+				<plugins>
+					<plugin>
+						<groupId>org.graalvm.nativeimage</groupId>
+						<artifactId>native-image-maven-plugin</artifactId>
+						<version>${graalvm.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>native-image</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<skip>true</skip>
+							<buildArgs>
+								--no-fallback
+								-H:+ReportExceptionStackTraces
+								-H:+TraceClassInitialization
+								-H:ReflectionConfigurationFiles=${project.build.outputDirectory}/graal.json
+								-H:IncludeResourceBundles=javax.servlet.LocalStrings
+								-H:IncludeResourceBundles=javax.servlet.http.LocalStrings
+								--initialize-at-build-time=org.slf4j
+								--initialize-at-build-time=io.netty.util.internal.logging.Log4JLogger
+								--initialize-at-build-time=org.apache.log4j.Category
+								--initialize-at-build-time=org.apache.log4j.Logger
+<!--								&#45;&#45;allow-incomplete-classpath-->
+							</buildArgs>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
