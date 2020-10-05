@@ -1,5 +1,15 @@
 [
   {
+    "name" : "io.openmessaging.benchmark.driver.kafka.KafkaBenchmarkDriver",
+    "allPublicConstructors": true,
+    "allPublicFields" : true
+  },
+  {
+    "name" : "io.openmessaging.benchmark.DriverConfiguration",
+    "allPublicConstructors": true,
+    "allPublicFields" : true
+  },
+  {
     "name" : "org.apache.bookkeeper.stats.prometheus.PrometheusMetricsProvider",
     "allPublicConstructors": true
   },
