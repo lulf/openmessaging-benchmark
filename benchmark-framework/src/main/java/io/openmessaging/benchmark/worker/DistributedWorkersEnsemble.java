@@ -144,7 +144,7 @@ public class DistributedWorkersEnsemble implements Worker {
         log.info("Number of producers configured for the topic: " + numberOfUsedProducerWorkers);
 
         topicsPerProducerMap.forEach((s, tpcs) -> {
-            log.info("Producer assignment {} => {}", s, tpcs);
+            log.debug("Producer assignment {} => {}", s, tpcs);
         });
 
 
@@ -216,7 +216,7 @@ public class DistributedWorkersEnsemble implements Worker {
         topicsPerWorkerMap.forEach((s, assignments) -> {
             if (!assignments.topicsSubscriptions.isEmpty()) {
                 String topics = assignments.topicsSubscriptions.stream().map(TopicSubscription::toString).collect(Collectors.joining(",", "[", "]"));
-                log.info("Consumer assignment {} => {}", s, topics);
+                log.debug("Consumer assignment {} => {}", s, topics);
             }
         });
 
