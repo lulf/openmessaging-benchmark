@@ -55,6 +55,8 @@ public class Workload {
 
     public int testDurationMinutes;
 
+    public int warmupDurationMinutes = 1;
+
     /**
      * Consumer only tests. The warn-up phase will be run w/ the specified producer
      * configuration until the specified backlog is built. Following that, the
