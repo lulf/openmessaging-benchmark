@@ -28,7 +28,7 @@ public class HistogramFactory {
     private static int NUMBER_OF_SIGNIFICANT_VALUE_DIGITS = DEFAULT_NUMBER_OF_SIGNIFICANT_VALUE_DIGITS;
 
     static {
-        String value = System.getenv("HISTOGRAM.NUMBER_OF_SIGNIFICANT_VALUE_DIGITS");
+        String value = System.getenv("HISTOGRAM_NUMBER_OF_SIGNIFICANT_VALUE_DIGITS");
         if (value != null && !value.isEmpty()) {
             try {
                 NUMBER_OF_SIGNIFICANT_VALUE_DIGITS = Integer.parseInt(value);
