@@ -17,12 +17,13 @@
 # under the License.
 #
 
-FROM openjdk:8-jdk
+FROM openjdk:11-jdk
 
 ARG BENCHMARK_TARBALL
 
 ADD ${BENCHMARK_TARBALL} /
 
 RUN mv openmessaging-benchmark-* /benchmark
+RUN ln -s /benchmark /tmp/src
 
 WORKDIR /benchmark
