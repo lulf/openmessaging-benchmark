@@ -46,7 +46,7 @@ jobs:
     
     - name: Build and run Unit tests
       run: |
-        mvn --batch-mode install deploy --file pom.xml --no-transfer-progress -Dno-format -P docker -Ddocker.organization=${{secrets.IMAGE_REPO_HOSTNAME}}
+        mvn --batch-mode install --file pom.xml --no-transfer-progress -Dno-format -P docker -Ddocker.organization=${{secrets.IMAGE_REPO_HOSTNAME}}
         docker login -u="${{secrets.IMAGE_REPO_USERNAME}}" -p="${{secrets.IMAGE_REPO_PASSWORD}}" ${{secrets.IMAGE_REPO_HOSTNAME}}
         docker push ${{secrets.IMAGE_REPO_HOSTNAME}}/${{secrets.IMAGE_REPO_NAMESPACE}}/openmessaging-benchmark:${{steps.metadata.outputs.version}}
       env:
