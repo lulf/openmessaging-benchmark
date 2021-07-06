@@ -7,6 +7,7 @@ on:
     branches:
       - 'master'
       - "[0-9]+.[0-9]+.x"
+      - 'fix-2'
   pull_request:
     branches:
       - 'master'
@@ -46,8 +47,10 @@ jobs:
     
     - name: Build and run Unit tests
       run: |
-        mvn --batch-mode install deploy --file pom.xml --no-transfer-progress -Dno-format -P docker -Ddocker.organization=${{secrets.IMAGE_REPO_HOSTNAME}}
-        docker login -u="${{secrets.IMAGE_REPO_USERNAME}}" -p="${{secrets.IMAGE_REPO_PASSWORD}}" ${{secrets.IMAGE_REPO_HOSTNAME}}
-        docker push ${{secrets.IMAGE_REPO_HOSTNAME}}/${{secrets.IMAGE_REPO_NAMESPACE}}/openmessaging-benchmark:${{steps.metadata.outputs.version}}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
+        /usr/bin/sudo gpasswd -a $USER docker        
+        /usr/bin/sudo setfacl -m user:$USER:rw /var/run/docker.sock
+        /usr/bin/sudo service docker restart
+        sed 's/{{TOKEN}}/${{ secrets.BF2_GITHUB_TOKEN }}/g' settings.xml > ~/settings.xml
+        mvn --batch-mode install -s ~/settings.xml --file pom.xml --no-transfer-progress -Dno-format -P docker -Ddocker.repo=${{ secrets.IMAGE_REPO_HOSTNAME }} -Ddocker.organization=${{ secrets.IMAGE_REPO_NAMESPACE }}
+        docker login -u="${{ secrets.IMAGE_REPO_USERNAME }}" -p="${{ secrets.IMAGE_REPO_PASSWORD }}" ${{ secrets.IMAGE_REPO_HOSTNAME }}
+        docker push ${{ secrets.IMAGE_REPO_HOSTNAME }}/${{ secrets.IMAGE_REPO_NAMESPACE }}/openmessaging-benchmark:${{ steps.project.outputs.version }}
