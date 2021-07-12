@@ -49,4 +49,4 @@ jobs:
         docker login -u="${{ secrets.IMAGE_REPO_USERNAME }}" -p="${{ secrets.IMAGE_REPO_PASSWORD }}" ${{ secrets.IMAGE_REPO_HOSTNAME }}
         docker push ${{ secrets.IMAGE_REPO_HOSTNAME }}/${{ secrets.IMAGE_REPO_NAMESPACE }}/openmessaging-benchmark:${{ steps.project.outputs.version }}
         docker tag ${{ secrets.IMAGE_REPO_HOSTNAME }}/${{ secrets.IMAGE_REPO_NAMESPACE }}/openmessaging-benchmark:${{ steps.project.outputs.version }} ${{ secrets.IMAGE_REPO_HOSTNAME }}/${{ secrets.IMAGE_REPO_NAMESPACE }}/openmessaging-benchmark:latest
-        docker push ${{ secrets.IMAGE_REPO_HOSTNAME }}/${{ secrets.IMAGE_REPO_NAMESPACE }}/openmessaging-benchmark:${{ steps.project.outputs.version }} ${{ secrets.IMAGE_REPO_HOSTNAME }}/${{ secrets.IMAGE_REPO_NAMESPACE }}/openmessaging-benchmark:latest
+        docker push ${{ secrets.IMAGE_REPO_HOSTNAME }}/${{ secrets.IMAGE_REPO_NAMESPACE }}/openmessaging-benchmark:latest
